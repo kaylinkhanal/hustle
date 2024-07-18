@@ -24,9 +24,11 @@ const SignupForm = () => {
   if(data) alert("registered successfully")
   }
   return (
-    <Card className='m-4 p-4'>
-        <Image src="./hustle_logo.jpg" width={100}
+    <Card className='flex justify-center m-12 p-12'>
+    
+      <Image src="./hustle_logo.jpg" width={100}
          height={100}/>
+
  <form  onSubmit={formik.handleSubmit}>
       <label htmlFor="firstName">Email</label>
       <Input
@@ -61,17 +63,20 @@ const SignupForm = () => {
         value={formik.values.fullName}
       />
          <label htmlFor="email">Gender</label>
-      <Input
-        id="gender"
-        name="gender"
-        type="text"
-        onChange={formik.handleChange}
-        value={formik.values.gender}
-      />
+
+<Select name="role" onChange={(e)=>formik.setFieldValue('role', e.target.value)}>
+    <SelectItem key="Male">Male</SelectItem>
+    <SelectItem key="Female">Female</SelectItem>
+    <SelectItem key="Others">Others</SelectItem>
+
+</Select>
+            <label htmlFor="role">Role</label>
+
         <Select name="role" onChange={(e)=>formik.setFieldValue('role', e.target.value)}>
             <SelectItem key="Recruiter">Recruiter</SelectItem>
             <SelectItem key="Freelancer">Freelancer</SelectItem>
         </Select>
+
       <Button type="submit">Submit</Button>
     </form>
     </Card>
