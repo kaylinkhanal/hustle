@@ -2,7 +2,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import { Button, Card, Input, Select, SelectItem } from '@nextui-org/react';
+import { Button, Card, Image, Input, Select, SelectItem } from '@nextui-org/react';
 
 const SignupForm = () => {
   const formik = useFormik({
@@ -25,6 +25,8 @@ const SignupForm = () => {
   }
   return (
     <Card className='m-4 p-4'>
+        <Image src="./hustle_logo.jpg" width={100}
+         height={100}/>
  <form  onSubmit={formik.handleSubmit}>
       <label htmlFor="firstName">Email</label>
       <Input
