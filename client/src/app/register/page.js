@@ -12,14 +12,16 @@ const SignupForm = () => {
       phoneNumber: '',
       fullName: '',
       gender: '',
+      role: ''
     },
     onSubmit: values => {
      registerUser(values)
     },
   });
 
-  const registerUser =(values)=>{
-    axios.post('http://localhost:7000/register', values)
+  const registerUser =async (values)=>{
+  const {data}= await  axios.post(`${process.env.NEXT_PUBLIC_API_URL}/register`, values)
+  if(data) alert("registered successfully")
   }
   return (
     <Card className='m-4 p-4'>
