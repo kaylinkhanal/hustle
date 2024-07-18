@@ -1,7 +1,12 @@
 const User = require('../models/users')
 const registerNewUser = (req, res) => {
-    User.create(req.body)
-    res.send("ok created")
+    try{
+        User.create(req.body)
+        res.send("ok created")
+    }catch(err){
+        res.send("sth went wrong")
+    }
+  
 }
 
 const loginUser = (req, res) => {
