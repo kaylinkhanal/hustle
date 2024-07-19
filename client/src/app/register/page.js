@@ -2,7 +2,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import axios from 'axios';
-import { Button, Card, Image, Input, Select, SelectItem } from '@nextui-org/react';
+import { Button, Card, Image, Input, Radio, RadioGroup, Select, SelectItem } from '@nextui-org/react';
 
 const SignupForm = () => {
   const formik = useFormik({
@@ -63,13 +63,12 @@ const SignupForm = () => {
         value={formik.values.fullName}
       />
          <label htmlFor="email">Gender</label>
+      <RadioGroup  onChange={(e)=>formik.setFieldValue('gender', e.target.defaultValue)}>
+      <Radio value="Male">Male</Radio>
+      <Radio value="Female">Female</Radio>
+      <Radio value="Other">Other</Radio>
+    </RadioGroup>
 
-<Select name="role" onChange={(e)=>formik.setFieldValue('role', e.target.value)}>
-    <SelectItem key="Male">Male</SelectItem>
-    <SelectItem key="Female">Female</SelectItem>
-    <SelectItem key="Others">Others</SelectItem>
-
-</Select>
             <label htmlFor="role">Role</label>
 
         <Select name="role" onChange={(e)=>formik.setFieldValue('role', e.target.value)}>
