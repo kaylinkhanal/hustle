@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Textarea } from './ui/textarea'
 import axios from 'axios'
+import { SparkleIcon, StarIcon } from 'lucide-react'
 
 const defaultContent = `
 <h1>John Doe</h1>
@@ -34,8 +35,7 @@ const defaultContent = `
 </ul>
 
 <h2>Education</h2>
-<h3>Bachelor of Science in Computer Science</h3>
-<p>University of Technology, Graduated 2015</p>
+<h3>@educationContent</h3>
 
 <h2>Skills</h2>
 @skills
@@ -178,45 +178,11 @@ const MenuBar = ({
 }
 
 
-export function AskAI({asistantSteps,setAssistantSteps, prompt, setPrompt}) {
+export function AskAI({asistantSteps,setAssistantSteps, prompt, setPrompt, loading}) {
 
   const configurations = [
     {title: 'Enter your target Job title!'},
-    {title: 'Enter your Skills (comma separated)!', options: [
-      {
-        "React": ["HTML", "JavaScript", "CSS", "Hooks", "Redux", "Context API", "Component Lifecycle", "React Router", "JSX", "SSR (Next.js)"]
-      },
-      {
-        "GraphQL": ["Queries", "Mutations", "Subscriptions", "Apollo Client", "Resolvers", "Schema Design", "Fragments", "GraphQL Playground", "Relay", "Caching"]
-      },
-      {
-        "REST": ["Endpoints", "CRUD", "HTTP Methods", "Status Codes", "Authentication", "Pagination", "Rate Limiting", "Versioning", "Caching", "HATEOAS"]
-      },
-      {
-        "Machine Learning": ["Supervised Learning", "Unsupervised Learning", "Neural Networks", "Feature Engineering", "Model Evaluation", "Reinforcement Learning", "Gradient Descent", "Clustering", "Decision Trees", "SVM"]
-      },
-      {
-        "Docker": ["Containers", "Dockerfile", "Images", "Volumes", "Networking", "Docker Compose", "Docker Swarm", "Multi-stage Builds", "Container Registry", "Security Best Practices"]
-      },
-      {
-        "Kubernetes": ["Pods", "Services", "Deployments", "ConfigMaps", "Ingress", "StatefulSets", "Helm Charts", "Namespaces", "Autoscaling", "RBAC"]
-      },
-      {
-        "Shell": ["Bash Scripting", "File Manipulation", "Process Management", "Regular Expressions", "Environment Variables", "SSH", "Job Scheduling (cron)", "Text Processing (sed/awk)", "Error Handling", "Command Substitution"]
-      },
-      {
-        "C++": ["Object-Oriented Programming", "Templates", "STL", "Pointers", "Multithreading", "File Handling", "Memory Management", "Lambda Expressions", "Smart Pointers", "Exception Handling"]
-      },
-      {
-        "C": ["Data Structures", "Pointers", "Memory Management", "File Handling", "Bitwise Operations", "Dynamic Allocation", "Macros", "Function Pointers", "Inline Assembly", "Libraries"]
-      },
-      {
-        "Python": ["Syntax", "Data Structures", "OOP", "Web Scraping", "Automation", "Decorators", "Generators", "Flask", "Django", "Data Analysis"]
-      }
-    ]
-    },
-
-    {title: 'Enter your Eduction'},
+    {title: 'Enter your Recent Eduction, College, and Graduation Year'},
     {title: 'Enter your Work Experience'}
   ]
 
@@ -236,7 +202,12 @@ export function AskAI({asistantSteps,setAssistantSteps, prompt, setPrompt}) {
           />
         </CardContent>
         <CardFooter>
-          <Button onClick={()=>setAssistantSteps(asistantSteps+1)} type="submit" className="w-full">Apply Changes</Button>
+          <Button onClick={()=>setAssistantSteps(asistantSteps+1)} type="submit" className="w-full">
+            {loading ? 'Hustle is thinking...':'Apply Changes' }
+           
+          
+          <SparkleIcon/>
+          </Button>
         </CardFooter>
     </Card>
   )
@@ -245,7 +216,7 @@ export function AskAI({asistantSteps,setAssistantSteps, prompt, setPrompt}) {
 
 export default function TiptapCVEditor() {
   const [prompt, setPrompt] = useState('')
-
+  const [loading, setLoading] = useState(false)
   const [asistantSteps, setAssistantSteps] = useState(0)
  
   const editor = useEditor({
@@ -267,16 +238,19 @@ export default function TiptapCVEditor() {
   }
 
   const getSkillsListAI = async(prompt)=>{
+    setLoading(true)
+
   const {data} =  await axios.post('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AIzaSyDuP5fDjvPdXNdIUK6UDNFMShbUqPsw-z0',
     {
       "contents": [{
-        "parts":[{"text": `Give me skills of ${prompt} developer of 3 years experience. Always keep it short and concise. Give me answer in string seperated by | and do not add new line or \n and extra spaces.`}]
+        "parts":[{"text": `Give me skills of ${prompt} of 3 years experience. Always keep it short and concise. Give me answer in string seperated by | and do not add new line or \n and extra spaces.`}]
         }]
        }
     )
     debugger;
     const updatedContent = editor.getHTML().replace('@skills', data.candidates[0]?.content?.parts[0]?.text.replaceAll('|','<br/>'))
     editor.commands.setContent(updatedContent)
+    if(data) setLoading(false)
   }
 
   useEffect(()=>{
@@ -285,6 +259,7 @@ export default function TiptapCVEditor() {
       editor.commands.setContent(updatedContent)
       getSkillsListAI(prompt)
       setPrompt('')
+
     }else if(asistantSteps ==2){
 
     }
@@ -297,7 +272,7 @@ export default function TiptapCVEditor() {
       <div className="border rounded-lg overflow-hidden shadow-lg">
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
-        <AskAI prompt={prompt} setPrompt={setPrompt} asistantSteps={asistantSteps} setAssistantSteps={setAssistantSteps}/>
+        <AskAI loading={loading} prompt={prompt} setPrompt={setPrompt} asistantSteps={asistantSteps} setAssistantSteps={setAssistantSteps}/>
       </div>
    
     </div>)
