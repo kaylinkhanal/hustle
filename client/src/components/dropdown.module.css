@@ -1,0 +1,87 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .select {
+    margin-bottom: 20px;
+  }
+  
+  .list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .listItem {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  .dragHandle {
+    cursor: grab;
+    margin-right: 10px;
+  }
+  
+  .companyName {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .yearsInput {
+    width: 80px;
+    margin-right: 10px;
+  }
+  
+  .datePickerContainer {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .datePicker {
+    width: 120px;
+    padding: 5px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .presentContainer {
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+  }
+  
+  .presentContainer label {
+    margin-left: 5px;
+  }
+  
+  .removeButton {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .jsonOutput {
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  
+  .jsonOutput h3 {
+    margin-top: 0;
+  }
+  
+  .jsonOutput pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+  
+  

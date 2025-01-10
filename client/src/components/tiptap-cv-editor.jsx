@@ -10,6 +10,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from './ui/card'
 import { Textarea } from './ui/textarea'
 import axios from 'axios'
 import { SparkleIcon, StarIcon } from 'lucide-react'
+import CreatableMultiselectWithDnD from './CreatableMultiselectWithDnD'
 
 const defaultContent = `
 <h1>John Doe</h1>
@@ -50,9 +51,7 @@ const MenuBar = ({
 
   return (
     (<div className="flex flex-wrap gap-2 p-2 bg-gray-100 border-b">
-      <Button>Skills</Button>
-      <Button>Education</Button>
-      <Button>Experience</Button>
+      
       <Button
         size="sm"
         variant={editor.isActive('bold') ? 'secondary' : 'outline'}
@@ -272,7 +271,21 @@ export default function TiptapCVEditor() {
       <div className="border rounded-lg overflow-hidden shadow-lg">
         <MenuBar editor={editor} />
         <EditorContent editor={editor} />
+        {asistantSteps <2 && 
         <AskAI loading={loading} prompt={prompt} setPrompt={setPrompt} asistantSteps={asistantSteps} setAssistantSteps={setAssistantSteps}/>
+        
+        }
+        {asistantSteps ===2 &&  <>
+          <CreatableMultiselectWithDnD/>
+          <Button onClick={()=>setAssistantSteps(asistantSteps+1)} type="submit" className="w-full">
+            {loading ? 'Hustle is thinking...':'Apply Changes' }
+           
+          
+          <SparkleIcon/>
+          </Button>
+        </>  }
+   
+
       </div>
    
     </div>)

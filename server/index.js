@@ -41,8 +41,16 @@ const userSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now }
 });
-
 const User = mongoose.model('User', userSchema);
+
+
+const jobApplicationSchema = new mongoose.Schema({
+  jobId: {type: mongoose.Schema.ObjectId, ref: 'Job'},
+  userId: {type: mongoose.Schema.ObjectId, ref: 'User'},
+  appliedDate: Date
+})
+
+const JobApplication = mongoose.model('JobApplication', jobApplicationSchema);
 
 
 const jobSchema = new mongoose.Schema({
