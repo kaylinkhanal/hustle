@@ -14,11 +14,7 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.1",
     "@tiptap/extension-color": "^2.11.0",
-<<<<<<< HEAD
     "@tiptap/extension-font-family": "^2.11.2",
-=======
-    "@tiptap/extension-history": "^2.11.2",
->>>>>>> 4262a4b (Reset cv generator)
     "@tiptap/extension-text-style": "^2.11.0",
     "@tiptap/react": "^2.11.0",
     "@tiptap/starter-kit": "^2.11.0",
