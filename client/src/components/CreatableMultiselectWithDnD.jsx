@@ -9,8 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import styles from './dropdown.module.css';
 
-const CreatableMultiselectWithDnD = () => {
-  const [companies, setCompanies] = useState([]);
+const CreatableMultiselectWithDnD = ({companies, setCompanies}) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleCreate = (inputValue) => {
