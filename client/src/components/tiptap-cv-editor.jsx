@@ -41,7 +41,10 @@ const defaultContent = `
 @skills
 `;
 
-const MenuBar = ({ editor }) => {
+const MenuBar = ({
+  editor,
+  setAssistantSteps,
+}) => {
   if (!editor) {
     return null;
   }
@@ -189,6 +192,16 @@ const MenuBar = ({ editor }) => {
       </Button>
       <Button
         size="sm"
+        variant="outline"
+        onClick={() => {
+          editor?.commands.setContent(defaultContent);
+          setAssistantSteps(0);
+        }}
+      >
+        Reset
+      </Button>
+      <Button
+        size="sm"
         variant={
           editor.isActive("textStyle", { color: "#958DF1" })
             ? "secondary"
@@ -242,7 +255,7 @@ export function AskAI({
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }
 
 
@@ -331,7 +344,10 @@ export default function TiptapCVEditor() {
   return (
     <div className="max-w-4xl mx-auto p-4">
       <div className="border rounded-lg overflow-hidden shadow-lg">
-        <MenuBar editor={editor} />
+        <MenuBar
+          editor={editor}
+          setAssistantSteps={setAssistantSteps}
+        />
         <EditorContent editor={editor} />
         {asistantSteps>=1 &&  <Button onClick={()=> setAssistantSteps(asistantSteps-1)}>
          <ArrowLeftIcon />
